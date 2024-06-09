@@ -1,0 +1,17 @@
+[{_tb_dataset_data.sql ./test/Data/_tb_dataset_data.sql _tb_dataset_data [_tb_dataset] -1}
+{_tb_sections_data.sql ./test/Data/_tb_sections_data.sql _tb_sections_data [_tb_sections] -1}
+{_tb_statements_data.sql ./test/Data/_tb_statements_data.sql _tb_statements_data [_tb_statements] -1}
+{_tb_templates_data.sql ./test/Data/_tb_templates_data.sql _tb_templates_data [_tb_templates] -1}
+{_fn_statements_generate_dynamic_filler.sql ./test/Functions/_fn_statements_generate_dynamic_filler.sql _fn_statements_generate_dynamic_filler [_fn_statements_generate_dynamic_filler _tb_statements_parts] -1}
+{_sp_statements_agg_text.sql ./test/Stored Procedures/_sp_statements_agg_text.sql _sp_statements_agg_text [_sp_statements_agg_text _tb_statements_parts] -1}
+{_sp_statements_create_fillers.sql ./test/Stored Procedures/_sp_statements_create_fillers.sql _sp_statements_create_fillers [_fn_statements_generate_dynamic_filler _sp_statements_create_fillers _tb_statements] -1}
+{_sp_statements_create_parts.sql ./test/Stored Procedures/_sp_statements_create_parts.sql _sp_statements_create_parts [_sp_statements_create_parts _tb_statements _tb_statements_parts] -1}
+{_sp_statements_create_parts_for_template.sql ./test/Stored Procedures/_sp_statements_create_parts_for_template.sql _sp_statements_create_parts_for_template [_sp_statements_create_parts _sp_statements_create_parts_for_template _tb_statements] -1}
+{_sp_statements_generate_tb_dataset.sql ./test/Stored Procedures/_sp_statements_generate_tb_dataset.sql _sp_statements_generate_tb_dataset [_sp_statements_generate_tb_dataset _tb_dataset _tb_statements] -1}
+{_sp_statements_generate_unpivot_tb_dataset.sql ./test/Stored Procedures/_sp_statements_generate_unpivot_tb_dataset.sql _sp_statements_generate_unpivot_tb_dataset [_sp_statements_generate_unpivot_tb_dataset _tb_dataset _tb_statements _tb_statements_parts] -1}
+{_tb_dataset.sql ./test/Tables/_tb_dataset.sql _tb_dataset [_tb_dataset] -1}
+{_tb_sections.sql ./test/Tables/_tb_sections.sql _tb_sections [_tb_sections] -1}
+{_tb_statements.sql ./test/Tables/_tb_statements.sql _tb_statements [_tb_sections _tb_statements _tb_templates] -1}
+{_tb_statements_parts.sql ./test/Tables/_tb_statements_parts.sql _tb_statements_parts [_tb_statements _tb_statements_parts] -1}
+{_tb_templates.sql ./test/Tables/_tb_templates.sql _tb_templates [_tb_templates] -1}
+{Tests.sql ./test/Tests.sql tests [_fn_statements_generate_dynamic_filler _sp_statements_agg_text _sp_statements_create_fillers _sp_statements_create_parts _sp_statements_create_parts_for_template _sp_statements_generate_tb_dataset _sp_statements_generate_unpivot_tb_dataset _tb_dataset _tb_statements _tb_statements_parts] -1}]

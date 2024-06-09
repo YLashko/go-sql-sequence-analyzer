@@ -1,0 +1,8 @@
+CREATE TABLE _tb_dataset (
+	id INT PRIMARY KEY IDENTITY,
+	var_start NVARCHAR(100),
+	var_1 NVARCHAR(100),
+	var_2 NVARCHAR(100),
+	var_3 NVARCHAR(100),
+	var_end NVARCHAR(100),
+)
