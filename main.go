@@ -28,7 +28,7 @@ func main() {
 
 	files := analyze(config_data.In_folder, config_data.Comments_regexp, config_data.Delimiters_regexp)
 	output_files(files, config_data.Out_folder)
-	fmt.Println("Finished, press any key to exit")
+	fmt.Println("Finished, press enter to exit")
 	io_reader := bufio.NewReader(os.Stdin)
 	io_reader.ReadString('\n')
 }
