@@ -1,27 +1,36 @@
 package main
 
 import (
+	"bufio"
+	"encoding/json"
 	"fmt"
 	"main/analyzer"
 	"main/reader"
+	"os"
+	"strings"
 )
 
+type Config_data struct {
+	In_folder         string
+	Out_folder        string
+	Comments_regexp   string
+	Delimiters_regexp string
+}
+
 func main() {
-	// files := reader.Listdir_recursive("./test_dir", "txt")
-	// fmt.Println(files)
+	// files := analyze("./data/in", "(\\/\\*(.|\n)*?\\*\\/)|(--(.)*(\n|$))|(\\'(.|\n)*?\\')", "[\\(\\[\\{.,:=+\\|/*\\}\\]\\)"+string(byte(10))+string(byte(13))+"]")
+	var config_data Config_data
+	config_file_contents := reader.Read_file("./config.json")
+	err := json.Unmarshal([]byte(config_file_contents), &config_data)
+	if err != nil {
+		panic(err)
+	}
 
-	// str := reader.Read_file("./sample_file.txt")
-	// // delimiters_regex := "[\\(\\[\\{.,:=+\\|/*\\}\\]\\)"+string(byte(10))+string(byte(13))+"]"
-	// delimiters := strings.Split("([{.,:+=\\|/*}])", "")
-	// sort.Strings(delimiters)
-	// removed_comments := analyzer.Remove_comments(str, "(\\/\\*(.|\n)*?\\*\\/)|(--(.)*(\n|$))")
-
-	// splitted := analyzer.Split_text_multiple_delimiters(removed_comments, "[\\(\\[\\{.,:=+\\|/*\\}\\]\\)"+string(byte(10))+string(byte(13))+"]")
-	// dependencies := analyzer.Find_dependencies(splitted, []string{"amOGus", "dsa", "the", "depepe", "=", "comment"}, false)
-	// fmt.Println(dependencies)
-
-	files := analyze("./data/in", "(\\/\\*(.|\n)*?\\*\\/)|(--(.)*(\n|$))|(\\'(.|\n)*?\\')", "[\\(\\[\\{.,:=+\\|/*\\}\\]\\)"+string(byte(10))+string(byte(13))+"]")
-	output_files(files, "./data/out")
+	files := analyze(config_data.In_folder, config_data.Comments_regexp, config_data.Delimiters_regexp)
+	output_files(files, config_data.Out_folder)
+	fmt.Println("Finished, press any key to exit")
+	io_reader := bufio.NewReader(os.Stdin)
+	io_reader.ReadString('\n')
 }
 
 func output_files(files []reader.File_info, out_folder_path string) {
@@ -36,10 +45,12 @@ func analyze(folder_path string, comments_regexp string, delimiters_regexp strin
 	possible_dependencies := get_possible_dependencies(files)
 
 	for i := 0; i < len(files); i++ {
+		fmt.Println("Scanning " + files[i].File_path)
 		file_contents := reader.Read_file(files[i].File_path)
 		removed_comments := analyzer.Remove_comments(file_contents, comments_regexp)
 		splitted := analyzer.Split_text_multiple_delimiters(removed_comments, delimiters_regexp)
 		files[i].Dependencies = analyzer.Find_dependencies(splitted, possible_dependencies, false)
+		fmt.Println("Dependencies: " + "[" + strings.Join(files[i].Dependencies, ", ") + "]")
 	}
 
 	found_dependencies := make(map[string]int)
@@ -76,7 +87,8 @@ func analyze(folder_path string, comments_regexp string, delimiters_regexp strin
 		}
 
 		if files_added_this_cycle == 0 {
-			panic("Cannot find dependencies; circular import possible")
+			fmt.Println("Circular reference found, finishing")
+			break
 		}
 
 		cycle++
