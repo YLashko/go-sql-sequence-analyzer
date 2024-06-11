@@ -2,5 +2,5 @@
     "in_folder": "./data/in",
     "out_folder": "./data/out",
     "comments_regexp": "(\/\\*(.|\n)*?\\*\\/)|(--(.)*(\n|$))|(\\'(.|\n)*?\\')",
-    "delimiters_regexp": "[\\(\\[\\{.,:=+\\|/*\\}\\]\\)\n\t]"
+    "delimiters_regexp": "[\\(\\[\\{.,:=+\\|/*\\}\\]\\)\\n\\t\\r]"
 }
